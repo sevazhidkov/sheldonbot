@@ -56,7 +56,3 @@ class Sheldon():
 
 class Plugin():
     pass
-
-
-class Adapter():
-    pass
