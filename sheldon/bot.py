@@ -8,6 +8,8 @@
 Copyright (C) 2015
 """
 
+import sys
+
 # Python 2 compatibility
 if sys.version_info[0] == 2:
     # Exceptions for bot
@@ -29,7 +31,7 @@ else:
     from .config import *
 
 
-class Sheldon():
+class Sheldon:
     """
     Main class of the bot.
     Run script creating new instance of this class and run it.
