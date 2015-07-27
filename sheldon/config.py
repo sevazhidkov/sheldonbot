@@ -9,8 +9,8 @@ Copyright (C) 2015
 """
 
 import yaml
-import os.path
 
+from sheldon.utils import logger
 
 
 class Adapter():
@@ -23,7 +23,8 @@ class Adapter():
         """
         Init new Adapter object
 
-        :param name: public name of adapter which used in adapters directory
+        :param name: public name of adapter which used in
+                     config/adapters directory
         :param variables: variables of adapters which set in config file
         """
         self.name = name
@@ -45,3 +46,32 @@ def load_adapter_config(config_path, adapter_name):
     adapter_config_path = '{config_folder}/adapters/{adapter}.yml'.format(
         config_folder=config_path, adapter=adapter_name
     )
+    adapter_config = yaml.load(open(adapter_config_path))
+
+    # If config correct, return it.
+    # Else - bot can't work correctly.
+    if validate_adapter_config(adapter_config_path):
+        logger.info_log_message('Loaded config of {name} plugin'.format(
+            name=adapter_name
+        ))
+        return adapter_config
+    else:
+        error_message = "Can't load config of {name} plugin".format(
+            name=adapter_name
+        )
+        logger.critical_log_message(error_message)
+        return None
+
+
+def validate_adapter_config(config):
+    """
+    Check required data in adapter config
+
+    :param config: dict, result of yaml.load()
+    :return:
+    """
+    try:
+        assert 'name' in config
+    except AssertionError:
+        logger.critical_log_message('Incorrect config')
+        return None
