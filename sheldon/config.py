@@ -13,7 +13,7 @@ import yaml
 from sheldon.utils import logger
 
 
-class Adapter():
+class Adapter:
     """
     Adapter class contains information about adapter:
     name, variables and module using to call adapter methods
@@ -25,7 +25,8 @@ class Adapter():
 
         :param name: public name of adapter which used in
                      config/adapters directory
-        :param variables: variables of adapters which set in config file
+        :param variables: variables of adapters which set in config file.
+                          Example of adapter variable - Slack API key.
         """
         self.name = name
         self.variables = variables
@@ -46,14 +47,23 @@ def load_adapter_config(config_path, adapter_name):
     adapter_config_path = '{config_folder}/adapters/{adapter}.yml'.format(
         config_folder=config_path, adapter=adapter_name
     )
-    adapter_config = yaml.load(open(adapter_config_path))
+    try:
+        adapter_config = yaml.load(open(adapter_config_path))
+    except FileNotFoundError:
+        logger.critical_log_message('Config of {} adapter is not found'.format(
+            adapter_name
+        ))
+        return None
 
     # If config correct, return it.
     # Else - bot can't work correctly.
-    if validate_adapter_config(adapter_config_path):
+    if validate_config(adapter_config, 'adapter', ['name']):
         logger.info_log_message('Loaded config of {name} adapter'.format(
             name=adapter_name
         ))
+
+        # Creating new Adapter object
+        adapter = Adapter(adapter_bane)
         return adapter_config
     else:
         error_message = "Can't load config of {name} adapter".format(
@@ -63,18 +73,23 @@ def load_adapter_config(config_path, adapter_name):
         return None
 
 
-def validate_adapter_config(config):
+def validate_config(config, config_type, required_fields):
     """
-    Check required data in adapter config
+    Check that config of config_type contains required fields.
+    For example, adapter config must contain 'name' field.
 
     :param config: dict, result of yaml.load()
+    :param config_type: string, 'adapter'/'plugin'/'general'
+    :param required_fields: list of strings
     :return:
     """
     try:
-        assert 'name' in config
-        # Other validations may be here
-        logger.info_log_message('Adapter config is correct')
+        # Check, that config contains all required fields
+        for field in required_fields:
+            assert field in config
+
+        logger.info_log_message('{} config is correct'.format(config_type))
         return True
     except AssertionError:
-        logger.critical_log_message('Incorrect config')
+        logger.critical_log_message('Incorrect {} config'.format(config_type))
         return False
