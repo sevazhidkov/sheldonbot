@@ -51,12 +51,12 @@ def load_adapter_config(config_path, adapter_name):
     # If config correct, return it.
     # Else - bot can't work correctly.
     if validate_adapter_config(adapter_config_path):
-        logger.info_log_message('Loaded config of {name} plugin'.format(
+        logger.info_log_message('Loaded config of {name} adapter'.format(
             name=adapter_name
         ))
         return adapter_config
     else:
-        error_message = "Can't load config of {name} plugin".format(
+        error_message = "Can't load config of {name} adapter".format(
             name=adapter_name
         )
         logger.critical_log_message(error_message)
@@ -72,6 +72,9 @@ def validate_adapter_config(config):
     """
     try:
         assert 'name' in config
+        # Other validations may be here
+        logger.info_log_message('Adapter config is correct')
+        return True
     except AssertionError:
         logger.critical_log_message('Incorrect config')
-        return None
+        return False
