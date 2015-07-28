@@ -62,8 +62,13 @@ def load_adapter_config(config_path, adapter_name):
             name=adapter_name
         ))
 
+        # Delete 'name' field to set 'variables' parameter of Adapter object.
+        # If config == {name: 'lulz', slack_api: 123} than variables param
+        # must be just {slack_api: 123}
+        adapter_config.pop('name')
+
         # Creating new Adapter object
-        adapter = Adapter(adapter_bane)
+        adapter = Adapter(adapter_name, adapter_config)
         return adapter_config
     else:
         error_message = "Can't load config of {name} adapter".format(
