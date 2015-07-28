@@ -55,6 +55,3 @@ class Sheldon:
         :return:
         """
 
-
-class Plugin():
-    pass
