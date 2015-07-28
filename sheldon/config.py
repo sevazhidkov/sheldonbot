@@ -69,7 +69,7 @@ def load_adapter_config(config_path, adapter_name):
 
         # Creating new Adapter object
         adapter = Adapter(adapter_name, adapter_config)
-        return adapter_config
+        return adapter
     else:
         error_message = "Can't load config of {name} adapter".format(
             name=adapter_name
