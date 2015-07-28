@@ -10,25 +10,9 @@ Copyright (C) 2015
 
 import sys
 
-# Python 2 compatibility
-if sys.version_info[0] == 2:
-    # Exceptions for bot
-    from exceptions import *
-
-    # Tool for loading plugins and adapters
-    from modules import *
-
-    # Tool for loading config from project folder
-    from config import *
-else:
-    # Exceptions for bot
-    from .exceptions import *
-
-    # Tool for loading plugins and adapters
-    from .modules import *
-
-    # Tool for loading config from project folder
-    from .config import *
+from sheldon.exceptions import *
+from sheldon.modules import *
+from sheldon.config import *
 
 
 class Sheldon:
