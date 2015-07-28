@@ -8,8 +8,6 @@
 Copyright (C) 2015
 """
 
-import sys
-
 from sheldon.exceptions import *
 from sheldon.modules import *
 from sheldon.config import *
