@@ -39,7 +39,7 @@ class Adapter:
         """
         Get new messages from adapter
 
-        :return: iterator of new messages
+        :return: iterator of Message objects
         """
         while True:
             messages = self.module.get_messages()
@@ -47,3 +47,22 @@ class Adapter:
                 yield message
             # Sleep seconds, which set in adapter config
             sleep(int(self.variables['timeout']))
+
+    def send_message(self, message):
+        """
+        Send message with adapter
+
+        :param message: Message object or string with message text
+        :return:
+        """
+        pass
+
+
+class Message:
+    """
+    Class for every message: incoming and outcoming.
+    """
+    def __init__(self, message_text, adapter):
+        self.text = message_text
+        self.adapter = adapter
+
