@@ -52,8 +52,8 @@ class Adapter:
         """
         Send message with adapter
 
-        :param message: Message object or string with message text
-        :return:
+        :param message: Message object
+        :return: True or False - result of sending
         """
         pass
 
