@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Manager for plugins and adapters
+Manager for plugins: importing, collecting hooks etc.
 
 @author: Lises team
 @contact: zhidkovseva@gmail.com
@@ -11,13 +11,5 @@ Copyright (C) 2015
 """
 
 
-class ModuleManager:
-    pass
-
-
-class PluginManager(ModuleManager):
-    pass
-
-
-class AdapterManager(ModuleManager):
+class PluginsManager:
     pass
