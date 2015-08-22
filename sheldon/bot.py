@@ -9,7 +9,7 @@ Copyright (C) 2015
 """
 
 from sheldon.exceptions import *
-from sheldon.modules import *
+from sheldon.manager import *
 from sheldon.config import *
 
 
@@ -29,11 +29,4 @@ class Sheldon:
         # Creating empty lists for plugins and adapters
         self.plugins = []
         self.adapters = []
-
-    def load_plugins(self):
-        """
-        Function for collecting and loading plugins from plugins folder.
-
-        :return:
-        """
 
