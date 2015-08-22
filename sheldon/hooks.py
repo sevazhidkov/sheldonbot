@@ -62,8 +62,8 @@ def message(regex):
     :param regex: string, regular expression for catching messages
     :return:
     """
-    def hook(func):
 
+    def hook(func):
         def wrapped(message_object, bot_object):
             """
             Wrapper around user's function
