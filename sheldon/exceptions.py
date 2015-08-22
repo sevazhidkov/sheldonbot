@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
+Tools for catching exceptions
+
 @author: Lises team
 @contact: zhidkovseva@gmail.com
 @license: The MIT license
