@@ -89,7 +89,7 @@ def load_adapter(bot):
         logger.critical_log_message("Error while loading plugin: \n" +
                                     str(error.__traceback__))
         return None
-    adapter_module.on_start()
+    adapter_module.on_start(bot)
     adapter_object = Adapter(adapter_name,
                              adapter_module)
     return adapter_object
