@@ -79,11 +79,11 @@ class Attachment:
         self.text = attachment_text
 
 
-def load_adapter(config):
-    adapter_name = config.get('SHELDON_ADAPTER_NAME', required=True)
+def load_adapter(bot):
+    adapter_name = bot.config.get('SHELDON_ADAPTER_NAME', required=True)
     try:
         adapter_module = import_module('adapters.{}'.format(
-            config.get('SHELDON_ADAPTER_NAME')
+            bot.config.get('SHELDON_ADAPTER_NAME')
         ))
     except ImportError as error:
         logger.critical_log_message("Error while loading plugin: \n" +
