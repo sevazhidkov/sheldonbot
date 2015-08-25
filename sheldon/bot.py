@@ -11,6 +11,8 @@ Copyright (C) 2015
 from sheldon.exceptions import *
 from sheldon.manager import *
 from sheldon.config import *
+from sheldon.adapter import *
+from sheldon.storage import *
 
 
 class Sheldon:
