@@ -43,18 +43,46 @@ class Message:
     Class for every message: incoming and outcoming.
     """
 
-    def __init__(self, message_text, adapter, message_attachments=[]):
+    def __init__(self, message_text, message_attachments, channel=None):
         """
-        Init new message
+        Create new message.
 
-        :param message_text: string, text of new message
-        :param adapter: Adapter object, current adapter
-        :param message_attachments: list of Attachment objects
-        :return:
+        :param message_text: string, text of message
+        :param message_attachments: list[Attachment] or Attachment object,
+                                    attachments with message
+        :param channel-: Message's channel: channel in Slack, room in Hipchat etc.
         """
-        self.text = message_text
-        self.adapter = adapter
-        self.attachments = message_attachments
+        self.message_text = message_text
+        # If attachment only one, convert it to list
+        if type(message_attachments) == Attachment:
+            self.message_attachments = [message_attachments]
+        else:
+            self.message_attachments = message_attachments
+        self.channel = channel
+
+
+class IncomingMessage(Message):
+    """
+    Class for messages from user.
+    """
+
+    def __init__(self, sender, **kwargs):
+        """
+        Create new message from user.
+
+        :param sender: User object, sender of message
+        """
+        super().__init__(**kwargs)
+        self.sender = sender
+
+
+class OutgoingMessage(Message):
+    """
+    Class for messages from bot.
+    """
+
+    def __init_(self, **kwargs):
+        super().__init__(**kwargs)
 
 
 class Attachment:
