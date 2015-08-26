@@ -71,7 +71,7 @@ class IncomingMessage(Message):
     Class for messages from user.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, sender, *args, **kwargs):
         """
         Create new message from user.
 
