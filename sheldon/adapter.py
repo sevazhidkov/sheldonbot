@@ -43,14 +43,18 @@ class Message:
     Class for every message: incoming and outcoming.
     """
 
-    def __init__(self, message_text, message_attachments, channel=None):
+    def __init__(self, message_text, message_attachments, channel=None, variables={}):
         """
         Create new message.
 
         :param message_text: string, text of message
         :param message_attachments: list[Attachment] or Attachment object,
                                     attachments with message
-        :param channel-: Message's channel: channel in Slack, room in Hipchat etc.
+        :param channel: Message's channel: channel in Slack, room in Hipchat etc.
+        :param variables: dict, external parameters to adapter:
+                          may be 'slack_username', 'slack_emoji'.
+                          Read about those in adapters' documentation.
+                          Parameters should start from adapter name.
         """
         self.message_text = message_text
         # If attachment only one, convert it to list
@@ -59,6 +63,7 @@ class Message:
         else:
             self.message_attachments = message_attachments
         self.channel = channel
+        self.variables = variables
 
 
 class IncomingMessage(Message):
@@ -66,13 +71,13 @@ class IncomingMessage(Message):
     Class for messages from user.
     """
 
-    def __init__(self, sender, **kwargs):
+    def __init__(self, *args, **kwargs):
         """
         Create new message from user.
 
         :param sender: User object, sender of message
         """
-        super().__init__(**kwargs)
+        super().__init__(*args, **kwargs)
         self.sender = sender
 
 
@@ -81,8 +86,8 @@ class OutgoingMessage(Message):
     Class for messages from bot.
     """
 
-    def __init_(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
 
 class Attachment:
