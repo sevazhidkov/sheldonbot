@@ -96,7 +96,7 @@ class Attachment:
     """
 
     def __init__(self, attachment_type, attachment_path=None,
-                 attachment_text=''):
+                 attachment_text='', attachment_id=None):
         """
         Init new attachment.
 
@@ -105,11 +105,13 @@ class Attachment:
         :param attachment_path: path to photo, video, url etc.
         :param attachment_text: optional text of attachment - may
                                 be сaption or something another
+        :param attachment_id: int, not required id of attachment from adapter
         :return:
         """
         self.type = attachment_type.lower()
         self.path = attachment_path
         self.text = attachment_text
+        self.id = attachment_id
 
 
 def load_adapter(bot):
