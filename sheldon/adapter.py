@@ -51,8 +51,8 @@ class Message:
         :param message_attachments: list[Attachment] or Attachment object,
                                     attachments with message
         :param channel: Message's channel: channel in Slack, room in Hipchat etc.
-        :param variables: dict, external parameters to adapter:
-                          may be 'slack_username', 'slack_emoji'.
+        :param variables: dict, external parameters from/to adapter:
+                          may be 'slack_username', 'slack_emoji', 'telegram_id'
                           Read about those in adapters' documentation.
                           Parameters should start from adapter name.
         """
