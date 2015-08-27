@@ -63,7 +63,7 @@ def send_message(Message, bot):
     pass
 
 
-# Every adapter must have implementation of User class.
+# Adapter must have implementation of User class.
 class User:
     def __init__(self, username):
         """
