@@ -7,7 +7,8 @@ sending it to stdout.
 Example adapter
 
 # Config must be at the end of __doc__
-# and have one blank line before it.
+# and have one blank line before it and
+# no blank lines in it.
 # Also config must be valid YAML document.
 # Comments must be after '#'
 name: console # Name of adapter, lowercase, match with
@@ -48,7 +49,7 @@ def get_messages(bot):
                     continue
                 attachments.append(Attachment(
                     attachment_type=attachment_data[0],
-                    attachment_path=attachment_data[1],
+                    attachment_path=attachment_data[1:],
                     attachment_id=randint(1, 1000000000)  # Fake id
                 ))
 
