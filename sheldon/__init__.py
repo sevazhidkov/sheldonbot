@@ -8,7 +8,7 @@
 Copyright (C) 2015
 """
 
-__author__ = 'Lises team'
+__author__ = 'Seva Zhidkov'
 __version__ = '0.1'
 __email__ = 'zhidkovseva@gmail.com'
 
