@@ -3,7 +3,7 @@
 """
 Manager for plugins: importing, collecting hooks etc.
 
-@author: Lises team
+@author: Seva Zhidkov
 @contact: zhidkovseva@gmail.com
 @license: The MIT license
 

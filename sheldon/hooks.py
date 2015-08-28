@@ -3,7 +3,7 @@
 """
 Decorators and other functions for hooks.
 
-@author: Lises team
+@author: Seva Zhidkov
 @contact: zhidkovseva@gmail.com
 @license: The MIT license
 

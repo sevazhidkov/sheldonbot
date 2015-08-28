@@ -3,7 +3,7 @@
 """
 Functions and classes for adapter working
 
-@author: Lises team
+@author: Seva Zhidkov
 @contact: zhidkovseva@gmail.com
 @license: The MIT license
 
