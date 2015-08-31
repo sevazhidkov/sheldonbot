@@ -43,7 +43,6 @@ class Storage:
             logger.error_log_message('Error while connection Redis:')
             logger.error_log_message(str(error.__traceback__))
             self.redis = None
-            return
 
 
 
