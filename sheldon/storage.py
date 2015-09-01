@@ -29,14 +29,16 @@ class Storage:
         # If we had problems with Redis - just set self.redis to None.
         # Not redis-required modules must work without Redis.
         try:
-            self.redis = StrictRedis(host=bot.config.get('SHELDON_REDIS_HOST',
-                                                         'localhost'),
-                                     port=int(
-                                         bot.config.get('SHELDON_REDIS_PORT',
-                                                        '6379')
+            # We get parameters for redis connection from bot's config.
+            # Redis port and redis db must be integers, so we give
+            # third argument to bot.config.get function with
+            # wrapper-function.
+            self.redis = StrictRedis(host=bot.config.get('SHELDON_REDIS_HOST', 'localhost'),
+                                     port=bot.config.get(
+                                         'SHELDON_REDIS_PORT', 6379, int
                                      ),
-                                     db=int(
-                                         bot.config.get('SHELDON_REDIS_DB', '0')
+                                     db=bot.config.get(
+                                         'SHELDON_REDIS_DB', 0, int
                                      )
                                     )
         except Exception as error:
