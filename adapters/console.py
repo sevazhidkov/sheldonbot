@@ -12,7 +12,7 @@ from sheldon import IncomingMessage, Attachment
 from random import randint
 from os import getlogin
 
-# Code running on adapter loading, may be here
+# Code running on adapter loading may be here
 
 
 def get_messages(bot):
