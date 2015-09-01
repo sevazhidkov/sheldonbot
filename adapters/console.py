@@ -1,6 +1,5 @@
 """
-# Config must be at __doc__.
-# Also config must be valid YAML document.
+# Config (valid YAML document) must be at __doc__.
 name: console # Name of adapter, lowercase, match with
               # file or package name.
 description: "Example adapter for testing bot."
