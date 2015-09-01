@@ -40,5 +40,25 @@ class Storage:
             logger.error_log_message(str(error.__traceback__))
             self.redis = None
 
+    def get(self, key, default_value=None):
+        """
+        Get value from redis
+
+        :param key: string, redis key for needed value
+        :param default_value: string, value that returns if
+                              key not found or redis isn't
+                              connected to this bot
+        :return: value with that key or default value
+        """
+        # If we had problems with redis connection,
+        # return None or other default value
+        if not self.redis:
+            return default_value
+
+        value = self.redis.get(key)
+        if value is not None:
+            return value
+        else:
+            return default_value
 
 
