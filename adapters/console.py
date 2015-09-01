@@ -1,18 +1,9 @@
 """
-Console adapter.
-
-Getting messages from stdin and
-sending it to stdout.
-
-Example adapter
-
-# Config must be at the end of __doc__
-# and have one blank line before it and
-# no blank lines in it.
+# Config must be at __doc__.
 # Also config must be valid YAML document.
-# Comments must be after '#'
 name: console # Name of adapter, lowercase, match with
               # file or package name.
+description: "Example adapter for testing bot."
 config:                           # Config variable needed to set
   - SHELDON_CONSOLE_PROMPT: '>>>' # in environment or in config.py).
                                   # You can set default values after colon.
