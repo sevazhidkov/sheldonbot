@@ -40,7 +40,7 @@ class Storage:
                                      )
                                     )
         except Exception as error:
-            logger.error_log_message('Error while connection Redis:')
+            logger.error_log_message('Error while connecting Redis:')
             logger.error_log_message(str(error.__traceback__))
             self.redis = None
 
