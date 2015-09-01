@@ -42,7 +42,7 @@ class Storage:
 
     def get(self, key, default_value=None):
         """
-        Get value from redis
+        Get value from redis storage
 
         :param key: string, redis key for needed value
         :param default_value: string, value that returns if
@@ -60,5 +60,19 @@ class Storage:
             return value
         else:
             return default_value
+
+    def set(self, key, value):
+        """
+        Set key to value in redis storage
+
+        :param key: string
+        :param value: string
+        :return:
+        """
+        if not self.redis:
+            return None
+
+        return self.redis.set(key, value)
+
 
 
