@@ -22,7 +22,7 @@ def get_messages(bot):
         # For our example, attachment will be looking like:
         # '[type]_[path]'
         received_attachments = input(
-            'Enter a comma-separated attachment'
+            'Enter a comma-separated attachments'
             '(<type>_<path>):'
         ).split(',')
 
