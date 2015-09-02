@@ -47,7 +47,7 @@ class Message:
         """
         Create new message.
 
-        :param message_text: string, text of message
+        :param text: string, text of message
         :param message_attachments: list[Attachment] or Attachment object,
                                     attachments with message
         :param channel: Message's channel: channel in Slack, room in Hipchat etc.
@@ -56,12 +56,12 @@ class Message:
                           Read about those in adapters' documentation.
                           Parameters should start from adapter name.
         """
-        self.message_text = message_text
+        self.text = message_text
         # If attachment only one, convert it to list
         if type(message_attachments) == Attachment:
-            self.message_attachments = [message_attachments]
+            self.attachments = [message_attachments]
         else:
-            self.message_attachments = message_attachments
+            self.attachments = message_attachments
         self.channel = channel
         self.variables = variables
 
