@@ -50,7 +50,14 @@ def get_messages(bot):
 
 
 def send_message(Message, bot):
-    pass
+    print('BOT: ', Message.text)
+    print('Channel: ', Message.channel)
+    print('Attachments:')
+    for attachment in Message.attachments:
+        print(attachment.id)
+        print(attachment.type)
+        print(attachment.path)
+        print(attachment.text)
 
 
 # Adapter must have implementation of User class.
