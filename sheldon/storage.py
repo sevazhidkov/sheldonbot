@@ -73,6 +73,3 @@ class Storage:
             return None
 
         return self.redis.set(key, value)
-
-
-
