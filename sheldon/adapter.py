@@ -92,7 +92,7 @@ class OutgoingMessage(Message):
 
 class Attachment:
     """
-    Class for every attachment: incoming and outcoming
+    Class for every attachment: incoming and outgoing
     """
 
     def __init__(self, attachment_type, attachment_path=None,
