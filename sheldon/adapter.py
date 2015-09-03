@@ -115,6 +115,12 @@ class Attachment:
 
 
 def load_adapter(bot):
+    """
+    Load adapter which set in bot config.
+
+    :param bot: Bot object
+    :return:
+    """
     adapter_name = bot.config.get('SHELDON_ADAPTER_NAME', required=True)
     try:
         adapter_module = import_module('adapters.{}'.format(
