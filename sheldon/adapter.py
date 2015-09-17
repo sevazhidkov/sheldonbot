@@ -29,9 +29,6 @@ class Adapter:
 
         :param name: public name of adapter which used in
                      config/adapters directory
-        :param variables: variables of adapters which set
-                          in os.environ or in config.py.
-                          Example of adapter variable - Slack API key.
         :param module: imported adapter's module
         """
         self.name = name
