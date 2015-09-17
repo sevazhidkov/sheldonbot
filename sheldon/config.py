@@ -16,7 +16,7 @@ class Config:
         """
         Load config from environment variables.
 
-        :param prefix: str, all needed environment variables
+        :param prefix: string, all needed environment variables
                             starts from it.
                             Default - 'SHELDON_'. So, environment
                             variables will be looking like:
@@ -29,4 +29,17 @@ class Config:
         for variable in os.environ:
             if variable.startswith(prefix):
                 self.variables[variable] = os.environ[variable]
+
+    def get(self, variable, default_value):
+        """
+
+        :param variable: string, needed variable
+        :param default_value: string, value that returns if
+                              variable is not set
+        :return:
+        """
+        if variable not in self.variables:
+            return default_value
+
+        return self.variables[variable]
 
