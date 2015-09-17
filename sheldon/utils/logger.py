@@ -13,7 +13,7 @@ Copyright (C) 2015
 import logging
 
 # Set logging file
-logging.basicConfig(filename='bot_log.log', level=logging.INFO)
+logging.basicConfig(filename='data/log/sheldon.log', level=logging.INFO)
 
 
 def info_message(message):
