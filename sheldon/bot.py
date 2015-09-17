@@ -8,11 +8,11 @@
 Copyright (C) 2015
 """
 
-from sheldon.adapter import *
-from sheldon.config import *
-from sheldon.exceptions import *
-from sheldon.manager import *
-from sheldon.storage import *
+from sheldon import adapter
+from sheldon import config
+from sheldon import exceptions
+from sheldon import manager
+from sheldon import storage
 from sheldon.utils import logger
 
 
@@ -44,11 +44,10 @@ class Sheldon:
                                                        Default - 'SHELDON_'
         :return:
         """
-        # Config class is imported from sheldon.config
         if 'config-prefix' in command_line_arguments:
-            self.config = Config(prefix=command_line_arguments['config-prefix'])
+            self.config = config.Config(prefix=command_line_arguments['config-prefix'])
         else:
-            self.config = Config()
+            self.config = config.Config()
 
         # If we had problems with config loading, stop the bot.
         if not self.config:
@@ -66,7 +65,7 @@ class Sheldon:
                                                  Default - 'console'.
         :return:
         """
-        self.adapter = load_adapter(command_line_arguments['adapter'])
+        self.adapter = adapter.load_adapter(command_line_arguments['adapter'])
 
         # If load adapter function return None, stop the bot.
         if not self.adapter:
