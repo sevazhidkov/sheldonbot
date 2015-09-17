@@ -32,6 +32,8 @@ class Sheldon:
 
         self._load_config(command_line_arguments)
 
+        self._load_adapter(command_line_arguments)
+
     def _load_config(self, command_line_arguments):
         """
         Сreate and load bot config.
@@ -51,3 +53,22 @@ class Sheldon:
         except Exception as error:
             logger.critical_message('Error with loading config:')
             logger.critical_message(str(error.__traceback__))
+
+    def _load_adapter(self, command_line_arguments={'adapter': 'console'}):
+        """
+        Load adapter.
+
+        :param command_line_arguments: dict, arguments for creating config:
+                                       adapter - name of adapter.
+                                                 May be local package in
+                                                 adapters folder or package
+                                                 from PyPi.
+                                                 Default - 'console'.
+        :return:
+        """
+        self.adapter = load_adapter(command_line_arguments['adapter'])
+
+        # If load adapter function return None, stop the bot.
+        if not self.adapter:
+            exit()
+

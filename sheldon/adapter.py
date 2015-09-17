@@ -111,23 +111,21 @@ class Attachment:
         self.id = attachment_id
 
 
-def load_adapter(bot):
+def load_adapter(adapter_name):
     """
     Load adapter which set in bot config.
 
-    :param bot: Bot object
+    :param adapter_name: name of adapter. May be local package in
+                         adapters folder or package from PyPi.
     :return:
     """
-    adapter_name = bot.config.get('SHELDON_ADAPTER_NAME', required=True)
     try:
-        adapter_module = import_module('adapters.{}'.format(
-            bot.config.get('SHELDON_ADAPTER_NAME')
-        ))
+        adapter_module = import_module('adapters.{}'.format(adapter_name))
     except ImportError as error:
         logger.critical_message("Error while loading plugin: \n" +
-                                    str(error.__traceback__))
+                                str(error.__traceback__))
         return None
-    adapter_module.on_start(bot)
+
     adapter_object = Adapter(adapter_name,
                              adapter_module)
     return adapter_object
