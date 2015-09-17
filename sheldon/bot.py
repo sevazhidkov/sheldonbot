@@ -51,6 +51,7 @@ class Sheldon:
 
         # If we had problems with config loading, stop the bot.
         if not self.config:
+            logger.info_message('Quiting')
             exit()
 
     def _load_adapter(self, command_line_arguments={'adapter': 'console'}):
@@ -69,5 +70,6 @@ class Sheldon:
 
         # If load adapter function return None, stop the bot.
         if not self.adapter:
+            logger.info_message('Quiting')
             exit()
 
