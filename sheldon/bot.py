@@ -13,6 +13,7 @@ from sheldon.config import *
 from sheldon.exceptions import *
 from sheldon.manager import *
 from sheldon.storage import *
+from sheldon.utils import logger
 
 
 class Sheldon:
@@ -42,7 +43,11 @@ class Sheldon:
         :return:
         """
         # Config class is imported from sheldon.config
-        if 'config-prefix' in command_line_arguments:
-            self.config = Config(prefix=command_line_arguments['config-prefix'])
-        else:
-            self.config = Config()
+        try:
+            if 'config-prefix' in command_line_arguments:
+                self.config = Config(prefix=command_line_arguments['config-prefix'])
+            else:
+                self.config = Config()
+        except Exception as error:
+            logger.error_log_message('Error with loading config:')
+            logger.error_log_message(str(error.__traceback__))
