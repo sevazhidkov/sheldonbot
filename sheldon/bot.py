@@ -45,14 +45,15 @@ class Sheldon:
         :return:
         """
         # Config class is imported from sheldon.config
-        try:
-            if 'config-prefix' in command_line_arguments:
-                self.config = Config(prefix=command_line_arguments['config-prefix'])
-            else:
-                self.config = Config()
-        except Exception as error:
-            logger.critical_message('Error with loading config:')
-            logger.critical_message(str(error.__traceback__))
+        if 'config-prefix' in command_line_arguments:
+            self.config = Config(prefix=command_line_arguments['config-prefix'])
+        else:
+            self.config = Config()
+
+        # If we had problems with config loading, stop the bot.
+        if not self.config:
+            exit()
+
 
     def _load_adapter(self, command_line_arguments={'adapter': 'console'}):
         """
