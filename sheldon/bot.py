@@ -54,7 +54,6 @@ class Sheldon:
         if not self.config:
             exit()
 
-
     def _load_adapter(self, command_line_arguments={'adapter': 'console'}):
         """
         Load adapter.
