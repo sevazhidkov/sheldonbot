@@ -16,17 +16,17 @@ import logging
 logging.basicConfig(filename='bot_log.log', level=logging.INFO)
 
 
-def info_log_message(message):
+def info_message(message):
     logging.info(message)
 
 
-def warning_log_message(message):
+def warning_message(message):
     logging.warning(message)
 
 
-def error_log_message(message):
+def error_message(message):
     logging.error(message)
 
 
-def critical_log_message(message):
+def critical_message(message):
     logging.critical(message)

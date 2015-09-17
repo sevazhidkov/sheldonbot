@@ -49,5 +49,5 @@ class Sheldon:
             else:
                 self.config = Config()
         except Exception as error:
-            logger.error_log_message('Error with loading config:')
-            logger.error_log_message(str(error.__traceback__))
+            logger.error_message('Error with loading config:')
+            logger.error_message(str(error.__traceback__))

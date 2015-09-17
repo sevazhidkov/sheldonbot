@@ -36,8 +36,8 @@ class Storage:
                 db=bot.config.get('SHELDON_REDIS_DB', '0')
             )
         except Exception as error:
-            logger.error_log_message('Error while connecting Redis:')
-            logger.error_log_message(str(error.__traceback__))
+            logger.error_message('Error while connecting Redis:')
+            logger.error_message(str(error.__traceback__))
             self.redis = None
 
     def get(self, key, default_value=None):

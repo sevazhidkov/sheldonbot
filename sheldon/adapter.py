@@ -127,7 +127,7 @@ def load_adapter(bot):
             bot.config.get('SHELDON_ADAPTER_NAME')
         ))
     except ImportError as error:
-        logger.critical_log_message("Error while loading plugin: \n" +
+        logger.critical_message("Error while loading plugin: \n" +
                                     str(error.__traceback__))
         return None
     adapter_module.on_start(bot)
