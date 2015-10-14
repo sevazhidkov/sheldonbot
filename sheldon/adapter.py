@@ -128,6 +128,7 @@ def load_adapter(adapter_name):
 
     # If it still fail, just return error
     if adapter_module is None:
+        logger.critical_message('Problems with importing adapter')
         return None
 
     adapter_object = Adapter(adapter_name,
