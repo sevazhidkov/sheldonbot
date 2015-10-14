@@ -32,14 +32,23 @@ class Config:
 
     def get(self, variable, default_value):
         """
+        Get variable value from environment
 
         :param variable: string, needed variable
         :param default_value: string, value that returns if
                               variable is not set
-        :return:
+        :return: variable value
         """
         if variable not in self.variables:
             return default_value
 
         return self.variables[variable]
+
+    def get_installed_plugins(self):
+        """
+        Return list of installed plugins from installed_plugins.txt
+        :return: list of strings with names of plugins
+        """
+        plugins_file = open('installed_plugins.txt')
+        return plugins_file.readlines()
 
