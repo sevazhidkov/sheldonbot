@@ -119,13 +119,30 @@ def load_adapter(adapter_name):
                          adapters folder or package from PyPi.
     :return:
     """
-    try:
-        adapter_module = import_module('adapters.{}'.format(adapter_name))
-    except ImportError as error:
-        logger.critical_message("Error while loading plugin: \n" +
-                                str(error.__traceback__))
+    # Try to import adapter from project directory
+    adapter_module = import_adapter('adapters.{}'.format(adapter_name))
+
+    # If it failed, try to import it as PyPi module
+    if adapter_module is None:
+        adapter_module = import_adapter(adapter_name)
+
+    # If it still fail, just return error
+    if adapter_module is None:
         return None
 
     adapter_object = Adapter(adapter_name,
                              adapter_module)
     return adapter_object
+
+
+def import_adapter(package_name):
+    """
+    Import adapter using importlib
+
+    :param package_name: full name of adapter, ex. 'adapters.console'
+    :return:
+    """
+    try:
+        return import_module(package_name)
+    except ImportError:
+        return None
