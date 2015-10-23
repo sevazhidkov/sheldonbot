@@ -10,7 +10,7 @@ Functions and classes for adapter working
 Copyright (C) 2015
 """
 
-from importlib import import_module
+import importlib
 from time import sleep
 
 from sheldon.utils import logger
@@ -144,6 +144,6 @@ def import_adapter(package_name):
     :return:
     """
     try:
-        return import_module(package_name)
+        return importlib.import_module(package_name)
     except ImportError:
         return None
