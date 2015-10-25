@@ -10,9 +10,16 @@ Manager for plugins: importing, collecting hooks etc.
 Copyright (C) 2015
 """
 
+import importlib
+
 
 class PluginsManager:
-    pass
+    def __init__(self):
+        """
+        Create plugins manager
+        :return:
+        """
+        pass
 
 
 class Plugin:
@@ -28,3 +35,16 @@ class Plugin:
         self.name = name
         self.module = module
         self.hooks = hooks
+
+
+def import_plugin(plugin_name):
+    """
+    Import plugin using importlib
+
+    :param plugin_name: full name of plugin, ex. 'plugins.console'
+    :return: module object or None if plugin not found
+    """
+    try:
+        return importlib.import_module(plugin_name)
+    except ImportError:
+        return None
