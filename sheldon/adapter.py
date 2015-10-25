@@ -11,7 +11,6 @@ Copyright (C) 2015
 """
 
 import importlib
-from time import sleep
 
 from sheldon.utils import logger
 
