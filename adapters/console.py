@@ -3,8 +3,8 @@
 name: console # Name of adapter, lowercase, match with
               # file or package name.
 description: "Example adapter for testing bot."
-config:                   # Config variable needed to set
-  - CONSOLE_PROMPT: '>>>' # in environment or in config.py).
+config:                   # Config variable that needed to set
+  - CONSOLE_PROMPT: '>>>' # in environment.
                           # You can set default values after colon.
 """
 from sheldon import IncomingMessage, Attachment
