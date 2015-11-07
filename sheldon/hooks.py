@@ -39,7 +39,7 @@ class Hook:
 
 
 class MessageHook(Hook):
-    def __init__(self, user_function, regex):
+    def __init__(self, user_function, regex, case_sensitive=False):
         """
         Create new message hook
 
@@ -47,19 +47,23 @@ class MessageHook(Hook):
                               when regular expression matching with
                               incoming message
         :param regex: regular expression for messages
+        :param case_sensitive: bool, is hook catching messages
+                                     with case sensitive
         """
         self.type = 'message'
 
         self.func = user_function
         self.regex = regex
+        self.case_sensitive = case_sensitive
 
 
-def message(regex):
+def message(regex, case_sensitive=False):
     """
     Hook for catching messages, for example:
     "i want cat", "thanks" etc.
 
     :param regex: string, regular expression for catching messages
+    :param case_sensitive: bool, is bot catching messages with case sensitive
     :return:
     """
 
@@ -75,7 +79,7 @@ def message(regex):
             return func(message_object, bot_object)
 
         wrapped._sheldon_found = True
-        wrapped._sheldon_hook = MessageHook(wrapped, regex)
+        wrapped._sheldon_hook = MessageHook(wrapped, regex, case_sensitive)
         return wrapped
 
     return hook
