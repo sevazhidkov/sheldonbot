@@ -34,9 +34,11 @@ class Sheldon:
 
         self._load_adapter(command_line_arguments)
 
+        self._load_plugins()
+
     def _load_config(self, command_line_arguments):
         """
-        Сreate and load bot config.
+        Create  and load bot config.
 
         :param command_line_arguments: dict, arguments for creating config:
                                        config-prefix - prefix of environment
@@ -72,4 +74,15 @@ class Sheldon:
         if not self.adapter:
             logger.info_message('Quiting')
             exit()
+
+    def _load_plugins(self):
+        """
+        Load plugins from plugins folder or PyPi using plugins manager.
+        
+        :return:
+        """
+        self.plugins_manager = manager.PluginsManager(self.config)
+
+        # Run function for searching and importing new plugins
+        self.plugins_manager.load_plugins()
 
