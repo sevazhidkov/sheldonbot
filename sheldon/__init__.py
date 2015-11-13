@@ -19,4 +19,5 @@ __email__ = 'zhidkovseva@gmail.com'
 # files by url.
 
 from sheldon.bot import *
+from sheldon.hooks import *
 from sheldon.utils import *
