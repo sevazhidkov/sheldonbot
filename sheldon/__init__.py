@@ -8,16 +8,20 @@
 Copyright (C) 2015
 """
 
-__author__ = 'Seva Zhidkov'
-__version__ = '0.1'
-__email__ = 'zhidkovseva@gmail.com'
+# Bot module contains bot's main class - Sheldon
+from sheldon.bot import *
 
-# Bot file contains bot's main class - Sheldon
+# Hooks module contains hooks for plugins
+from sheldon.hooks import *
+
 # Utils folder contains scripts for more
 # comfortable work with sending and parsing
 # messages. For example, script for downloading
 # files by url.
-
-from sheldon.bot import *
-from sheldon.hooks import *
 from sheldon.utils import *
+
+__author__ = 'Seva Zhidkov'
+__version__ = '0.0.1#dev'
+__email__ = 'zhidkovseva@gmail.com'
+
+
