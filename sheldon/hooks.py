@@ -57,6 +57,25 @@ class MessageHook(Hook):
         self.case_sensitive = case_sensitive
 
 
+def find_hooks(plugin_module):
+    """
+    Find hooks in plugin module
+
+    :param plugin_module: module object
+    :return: list of Hook objects
+    """
+    hooks = []
+    # Iterating throw plugin elements
+    for item in plugin_module.__dict__.items():
+        item = plugin_module.__dict__[item]
+
+        # Hooks are setting '_sheldon_hook' parameters
+        # on functions when they decorated.
+        if hasattr(item, '_sheldon_hook'):
+            hooks.append(item._sheldon_hook)
+    return hooks
+
+
 def message(regex, case_sensitive=False):
     """
     Hook for catching messages, for example:
@@ -78,7 +97,6 @@ def message(regex, case_sensitive=False):
             """
             return func(message_object, bot_object)
 
-        wrapped._sheldon_found = True
         wrapped._sheldon_hook = MessageHook(wrapped, regex, case_sensitive)
         return wrapped
 
