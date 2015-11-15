@@ -9,7 +9,7 @@ Interface to Redis-storage.
 
 Copyright (C) 2015
 """
-from .utils import logger
+from sheldon.utils import logger
 
 # We will catch all import exceptions in bot.py
 from redis import StrictRedis
