@@ -3,7 +3,7 @@
 """
 Functions for sending messages to log file
 
-@author: Lises team
+@author: Seva Zhidkov
 @contact: zhidkovseva@gmail.com
 @license: The MIT license
 
