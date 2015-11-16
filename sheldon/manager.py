@@ -10,7 +10,6 @@ Manager for plugins: importing, collecting hooks etc.
 Copyright (C) 2015
 """
 
-import os
 import importlib
 
 from sheldon.utils import logger
@@ -25,24 +24,30 @@ class PluginsManager:
         :return:
         """
         self.config = config
+        self.plugins = []
 
     def load_plugins(self):
         """
         Load plugins from 'installed_plugins.txt' file
 
-        :return: list of modules
+        :return: list of Plugin objects
         """
-        plugin_names = config.get_installed_plugins()
-        plugins = []
+        plugin_names = self.config.installed_plugins
         for plugin_name in plugin_names:
-            plugin = import_plugin(plugin_name)
-            if plugin is not None:
-                plugins.append(plugin)
-        return plugins
+            self._load_plugin(plugin_name)
 
     def reload_plugins(self):
         # TODO
         pass
+
+    def _load_plugin(self, plugin_name):
+        """
+        Parse config, find hooks and create new Plugin object.
+
+        :param plugin_name: name for plugin import
+        :return: Plugin object
+        """
+        self.plugins.append(plugin_name)
 
 
 class Plugin:
