@@ -13,6 +13,7 @@ Copyright (C) 2015
 import importlib
 
 from sheldon.utils import logger
+from sheldon.hooks import find_hooks
 
 
 class PluginsManager:
@@ -45,9 +46,18 @@ class PluginsManager:
         Parse config, find hooks and create new Plugin object.
 
         :param plugin_name: name for plugin import
-        :return: Plugin object
+        :return:
         """
-        self.plugins.append(plugin_name)
+        plugin_module = import_plugin(plugin_name)
+        if not plugin_module:
+            logger.error_message("'{}' plugin didn't load".format(
+                plugin_name
+            ))
+            return
+        hooks = find_hooks(plugin_module)
+
+        plugin = Plugin(plugin_name, plugin_module, hooks)
+        self.plugins.append(plugin)
 
 
 class Plugin:
