@@ -39,8 +39,13 @@ class PluginsManager:
             self.load_plugin(plugin_name)
 
     def reload_plugins(self):
-        # TODO
-        pass
+        """
+        Reload all imported and loaded plugins
+
+        :return:
+        """
+        for plugin in self.plugins:
+            plugin.reload_plugin()
 
     def load_plugin(self, plugin_name):
         """
@@ -77,6 +82,16 @@ class Plugin:
         self.module = module
         self.config = config
         self.hooks = hooks
+
+    def reload_plugin(self):
+        """
+        Reload plugin (import it and find hooks again)
+
+        :return:
+        """
+        self.module = importlib.reload(self.module)
+        self.config = parse_config(self.module)
+        self.hooks = find_hooks(self.module)
 
 
 def import_plugin(plugin_name):
