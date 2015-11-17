@@ -13,6 +13,7 @@ Copyright (C) 2015
 import importlib
 
 from sheldon.utils import logger
+from sheldon.config import parse_config
 
 
 class Adapter:
@@ -22,16 +23,18 @@ class Adapter:
     All adapters inherited from Adapter class'
     """
 
-    def __init__(self, name, module):
+    def __init__(self, name, module, config):
         """
         Init new Adapter object
 
         :param name: public name of adapter which used in
                      config/adapters directory
         :param module: imported adapter's module
+        :param config: ModuleConfig, parsed adapter config
         """
         self.name = name
         self.module = module
+        self.config = config
 
 
 class Message:
@@ -39,12 +42,12 @@ class Message:
     Class for every message: incoming and outcoming.
     """
 
-    def __init__(self, message_text, message_attachments, channel=None, variables={}):
+    def __init__(self, text, attachments, channel=None, variables={}):
         """
         Create new message.
 
         :param text: string, text of message
-        :param message_attachments: list[Attachment] or Attachment object,
+        :param attachments: list[Attachment] or Attachment object,
                                     attachments with message
         :param channel: Message's channel: channel in Slack, room in Hipchat etc.
         :param variables: dict, external parameters from/to adapter:
@@ -52,12 +55,12 @@ class Message:
                           Read about those in adapters' documentation.
                           Parameters should start from adapter name.
         """
-        self.text = message_text
+        self.text = text
         # If attachment only one, convert it to list
-        if type(message_attachments) == Attachment:
-            self.attachments = [message_attachments]
+        if type(attachments) == Attachment:
+            self.attachments = [attachments]
         else:
-            self.attachments = message_attachments
+            self.attachments = attachments
         self.channel = channel
         self.variables = variables
 
@@ -130,8 +133,11 @@ def load_adapter(adapter_name):
         logger.critical_message('Problems with importing adapter')
         return None
 
+    adapter_config = parse_config(adapter_module)
+
     adapter_object = Adapter(adapter_name,
-                             adapter_module)
+                             adapter_module,
+                             adapter_config)
     return adapter_object
 
 
