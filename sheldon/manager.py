@@ -36,13 +36,13 @@ class PluginsManager:
         """
         plugin_names = self.config.installed_plugins
         for plugin_name in plugin_names:
-            self._load_plugin(plugin_name)
+            self.load_plugin(plugin_name)
 
     def reload_plugins(self):
         # TODO
         pass
 
-    def _load_plugin(self, plugin_name):
+    def load_plugin(self, plugin_name):
         """
         Parse config, find hooks and create new Plugin object.
 
