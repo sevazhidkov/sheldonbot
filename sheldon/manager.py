@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Manager for plugins: importing, collecting hooks etc.
+Manager for plugins: importing and loading
 
 @author: Seva Zhidkov
 @contact: zhidkovseva@gmail.com
@@ -14,6 +14,7 @@ import importlib
 
 from sheldon.utils import logger
 from sheldon.hooks import find_hooks
+from sheldon.config import parse_config
 
 
 class PluginsManager:
@@ -54,24 +55,27 @@ class PluginsManager:
                 plugin_name
             ))
             return
+        plugin_config = parse_config(plugin_module)
         hooks = find_hooks(plugin_module)
 
-        plugin = Plugin(plugin_name, plugin_module, hooks)
+        plugin = Plugin(plugin_name, plugin_module, plugin_config, hooks)
         self.plugins.append(plugin)
 
 
 class Plugin:
-    def __init__(self, name, module, hooks):
+    def __init__(self, name, module, config, hooks):
         """
         Create new plugin
 
         :param name: string, module name
         :param module: module, imported plugin module
+        :param config: ModuleConfig object, parsed plugin config
         :param hooks: list of Hook objects
         :return:
         """
         self.name = name
         self.module = module
+        self.config = config
         self.hooks = hooks
 
 
