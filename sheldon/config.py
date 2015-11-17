@@ -9,6 +9,9 @@ Copyright (C) 2015
 """
 
 import os
+import yaml
+
+from sheldon.utils import logger
 
 
 class Config:
@@ -30,6 +33,8 @@ class Config:
             if variable.startswith(prefix):
                 self.variables[variable] = os.environ[variable]
 
+        self._set_installed_plugins()
+
     def get(self, variable, default_value):
         """
         Get variable value from environment
@@ -44,11 +49,53 @@ class Config:
 
         return self.variables[variable]
 
-    def get_installed_plugins(self):
+    def _set_installed_plugins(self):
         """
-        Return list of installed plugins from installed_plugins.txt
-        :return: list of strings with names of plugins
+        Create list of installed plugins from installed_plugins.txt
+        :return:
         """
         plugins_file = open('installed_plugins.txt')
-        return plugins_file.readlines()
+        self.installed_plugins = plugins_file.readlines()
+
+
+class ModuleConfig:
+    """
+    Config class for each module: plugins and adapters
+    """
+    def __init__(self, data):
+        """
+        Create config object for plugin or adapter
+
+        :param data: dict, result of yaml.load()
+        :return:
+        """
+        self.data = data
+
+
+def parse_config(module):
+    """
+    Parse module (plugin/adapter) config in __doc__
+
+    :param module: module object
+    :return: ModuleConfig object
+    """
+    if not hasattr(module, '__doc__'):
+        logger.error_message('__doc__ config not found in {}'.format(module))
+        return ModuleConfig()
+
+    config_text = module.__doc__
+    try:
+        config_data = yaml.load(config_text)
+    except yaml.scanner.ScannerError as error:
+        logger.error_message('Error while reading {} config \n {}'.format(
+            module,
+            error.__traceback__
+        ))
+        return None
+
+    config = ModuleConfig(config_data)
+    return config
+
+
+
 
