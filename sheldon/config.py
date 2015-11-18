@@ -35,7 +35,7 @@ class Config:
 
         self._set_installed_plugins()
 
-    def get(self, variable, default_value):
+    def get(self, variable, default_value=None):
         """
         Get variable value from environment
 
