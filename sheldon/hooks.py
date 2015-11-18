@@ -66,8 +66,8 @@ def find_hooks(plugin_module):
     """
     hooks = []
     # Iterating throw plugin elements
-    for item in plugin_module.__dict__.items():
-        item = plugin_module.__dict__[item]
+    for name in plugin_module.__dict__.keys():
+        item = plugin_module.__dict__[name]
 
         # Hooks are setting '_sheldon_hook' parameters
         # on functions when they decorated.
