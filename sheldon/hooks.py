@@ -56,6 +56,20 @@ class MessageHook(Hook):
         self.regex = regex
         self.case_sensitive = case_sensitive
 
+    def check(self, incoming_message):
+        """
+        Check, is this message catching for this hook
+
+        :param incoming_message: IncomingMessage object
+        :return: True or False
+        """
+        if not self.case_sensitive:
+            return bool(
+                re.match(self.regex, incoming_message.text, re.IGNORECASE)
+            )
+        else:
+            return bool(re.match(self.regex, incoming_message.text))
+
 
 def find_hooks(plugin_module):
     """
