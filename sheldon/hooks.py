@@ -26,6 +26,10 @@ class Hook:
     type = ''
     func = None
 
+    # If not one module return True after check,
+    # bot sort matches by priority and choose first.
+    priority = 0
+
     @catch_plugin_errors
     def call(self, incoming_message, bot):
         """
@@ -51,6 +55,7 @@ class MessageHook(Hook):
                                      with case sensitive
         """
         self.type = 'message'
+        self.priority = 1
 
         self.func = user_function
         self.regex = regex
@@ -69,6 +74,32 @@ class MessageHook(Hook):
             )
         else:
             return bool(re.match(self.regex, incoming_message.text))
+
+
+class CommandHook(Hook):
+    def __init__(self, user_function, command):
+        """
+        Create new command hook
+
+        :param user_function: decorated user's function, called
+                              when command matching with incoming message
+        :param command: str, command text without '!'.
+                        For example, 'join'.
+        """
+        self.type = 'message'
+        self.priority = 2
+
+        self.func = user_function
+        self.command = command
+
+    def check(self, incoming_message):
+        """
+        Check, is this message catching for this hook
+
+        :param incoming_message: IncomingMessage object
+        :return: True or False
+        """
+        return incoming_message.lstrip().startswith('!' + self.command)
 
 
 def find_hooks(plugin_module):
@@ -112,6 +143,32 @@ def message(regex, case_sensitive=False):
             return func(message_object, bot_object)
 
         wrapped._sheldon_hook = MessageHook(wrapped, regex, case_sensitive)
+        return wrapped
+
+    return hook
+
+
+def command(command_text):
+    """
+    Hook for catching commands, for example:
+    "!asana", "!deploy sheldon" etc.
+
+    :param command_text: str, command text without '!'. For example, 'join'.
+    :return:
+    """
+
+    def hook(func):
+        def wrapped(message_object, bot_object):
+            """
+            Wrapper around user's function
+
+            :param message_object: incoming message, Message object
+            :param bot_object: Sheldon object
+            :return:
+            """
+            return func(message_object, bot_object)
+
+        wrapped._sheldon_hook = CommandHook(wrapped, command_text)
         return wrapped
 
     return hook
