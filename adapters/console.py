@@ -49,11 +49,11 @@ def get_messages(bot):
                               })
 
 
-def send_message(Message, bot):
-    print('BOT: ', Message.text)
-    print('Channel: ', Message.channel)
+def send_message(message, bot):
+    print('BOT: ', message.text)
+    print('Channel: ', message.channel)
     print('Attachments:')
-    for attachment in Message.attachments:
+    for attachment in message.attachments:
         print(attachment.id)
         print(attachment.type)
         print(attachment.path)
