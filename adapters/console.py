@@ -7,7 +7,7 @@ config:                           # Config variable that needed to set
   - SHELDON_CONSOLE_PROMPT: '>>>' # in environment.
                                   # You can set default values after colon.
 """
-from sheldon import IncomingMessage, Attachment
+from sheldon.adapter import IncomingMessage, Attachment
 from random import randint
 from os import getlogin
 
