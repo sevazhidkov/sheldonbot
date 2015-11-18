@@ -151,5 +151,5 @@ def import_adapter(package_name):
     try:
         return importlib.import_module(package_name)
     except ImportError as error:
-        logger.critical_message(error.__traceback__)
+        logger.critical_message(error)
         return None

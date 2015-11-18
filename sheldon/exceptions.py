@@ -24,7 +24,7 @@ def catch_plugin_errors(plugin_call_function):
         try:
             plugin_call_function(*args, **kwargs)
         except Exception as error:
-            error_message = str(error.__traceback__)
+            error_message = str(error)
             logger.error_message('Plugin error: \n' + error_message)
 
     return wrapper

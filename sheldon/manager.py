@@ -105,6 +105,6 @@ def import_plugin(plugin_name):
         return importlib.import_module(plugin_name)
     except ImportError as error:
         logger.error_message('Error with loading {}: \n {}'.format(
-            plugin_name, error.__traceback__
+            plugin_name, str(error)
         ))
         return None
