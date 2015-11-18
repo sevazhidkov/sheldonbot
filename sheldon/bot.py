@@ -62,7 +62,7 @@ class Sheldon:
                                                  May be local package in
                                                  adapters folder or package
                                                  from PyPi.
-                                                 Default - 'adapters.console'.
+                                                 Default - 'console'.
         :return:
         """
         self.adapter = adapter.load_adapter(command_line_arguments['adapter'])
