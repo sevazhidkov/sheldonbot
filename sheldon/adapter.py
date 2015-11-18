@@ -36,21 +36,11 @@ class Adapter:
         self.module = module
         self.config = config
 
-    def start(self, bot):
-        """
-        Start getting messages from adapter
-
-        :param bot: Sheldon object, main bot object
-        :return:
-        """
-        return self.module.get_messages(bot)
-
 
 class Message:
     """
     Class for every message: incoming and outgoing.
     """
-
     def __init__(self, text, attachments, channel=None, variables={}):
         """
         Create new message.

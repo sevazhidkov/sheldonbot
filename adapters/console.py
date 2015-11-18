@@ -43,9 +43,9 @@ def get_messages(bot):
                     attachment_id=randint(1, 1000000000)  # Fake id
                 ))
 
-        yield IncomingMessage(sender=User(username=getlogin()), message_text=text,
-                              message_attachments=attachments, variables={
-                                  'console_id': randint(1, 1000000000)  # Fake id
+        yield IncomingMessage(sender=User(username=getlogin()), text=text,
+                              attachments=attachments, variables={
+                                  'id': randint(1, 1000000000)  # Fake message id
                               })
 
 

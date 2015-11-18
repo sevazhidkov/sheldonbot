@@ -83,3 +83,12 @@ class Sheldon:
         # Run function for searching and importing new plugins
         self.plugins_manager.load_plugins()
 
+    def start(self):
+        """
+        Start getting messages from bot adapter
+
+        :return:
+        """
+        for message in self.adapter.module.get_messages(self):
+            print(message)
+
