@@ -46,17 +46,14 @@ class Sheldon:
                                                        Default - 'SHELDON_'
         :return:
         """
-        if 'config-prefix' in command_line_arguments:
-            self.config = config.Config(prefix=command_line_arguments['config-prefix'])
-        else:
-            self.config = config.Config()
+        self.config = config.Config(prefix=command_line_arguments['config-prefix'])
 
         # If we had problems with config loading, stop the bot.
         if not self.config:
             logger.info_message('Quiting')
             exit()
 
-    def _load_adapter(self, command_line_arguments={'adapter': 'console'}):
+    def _load_adapter(self, command_line_arguments):
         """
         Load adapter.
 
