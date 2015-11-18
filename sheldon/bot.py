@@ -85,7 +85,7 @@ class Sheldon:
 
     def start(self):
         """
-        Start getting messages from bot adapter
+        Start getting, parsing and answering messages
 
         :return:
         """
