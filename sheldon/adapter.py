@@ -41,7 +41,7 @@ class Message:
     """
     Class for every message: incoming and outgoing.
     """
-    def __init__(self, text, attachments, channel=None, variables={}):
+    def __init__(self, text='', attachments=[], channel=None, variables={}):
         """
         Create new message.
 
