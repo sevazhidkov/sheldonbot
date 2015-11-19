@@ -14,6 +14,10 @@ from sheldon.bot import *
 # Hooks module contains hooks for plugins
 from sheldon.hooks import *
 
+# Adapter module contains classes and tools
+# for plugins sending messages
+from sheldon.adapter import *
+
 # Utils folder contains scripts for more
 # comfortable work with sending and parsing
 # messages. For example, script for downloading
