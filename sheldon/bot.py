@@ -90,5 +90,35 @@ class Sheldon:
         :return:
         """
         for message in self.adapter.module.get_messages(self):
-            print(message)
+            hook = self.parse_message(message)
+            if hook:
+                hook.call(message, self)
+
+    def parse_message(self, message):
+        """
+        Check message for all hooks of plugins
+
+        :param message: IncomingMessage object
+        :return: Hook object or None
+        """
+        found_hooks = []
+        for plugin in self.plugins_manager.plugins:
+            hook = plugin.check_hooks(message)
+            if hook is not None:
+                found_hooks.append(hook)
+
+        if found_hooks:
+            found_hooks.sort(key=lambda h: h.priority, reverse=True)
+            return found_hooks[0]
+        else:
+            return None
+
+    def send_message(self, message):
+        """
+        Send outgoing message from plugin
+
+        :param message: OutgoingMessage object
+        :return:
+        """
+        self.adapter.module.send_message(message, self)
 
