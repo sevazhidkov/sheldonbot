@@ -127,6 +127,7 @@ class Sheldon:
         else:
             return None
 
+    @exceptions.catch_module_errors
     def send_message(self, message):
         """
         Send outgoing message from plugin

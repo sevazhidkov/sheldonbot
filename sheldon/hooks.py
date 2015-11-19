@@ -12,7 +12,7 @@ Copyright (C) 2015
 
 import re
 
-from sheldon.exceptions import catch_plugin_errors
+from sheldon.exceptions import catch_module_errors
 
 
 class Hook:
@@ -30,7 +30,7 @@ class Hook:
     # bot sort matches by priority and choose first.
     priority = 0
 
-    @catch_plugin_errors
+    @catch_module_errors
     def call(self, incoming_message, bot):
         """
         Run hook
