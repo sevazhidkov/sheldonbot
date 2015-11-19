@@ -43,14 +43,14 @@ class Hook:
 
 
 class MessageHook(Hook):
-    def __init__(self, user_function, regex, case_sensitive=False):
+    def __init__(self, user_function, regexes, case_sensitive=False):
         """
         Create new message hook
 
         :param user_function: decorated user's function, called
                               when regular expression matching with
                               incoming message
-        :param regex: regular expression for messages
+        :param regexes: regular expression for messages
         :param case_sensitive: bool, is hook catching messages
                                      with case sensitive
         """
@@ -58,7 +58,11 @@ class MessageHook(Hook):
         self.priority = 1
 
         self.func = user_function
-        self.regex = regex
+
+        if type(regexes) == str:
+            regexes = [regexes]
+        self.regexes = regexes
+
         self.case_sensitive = case_sensitive
 
     def check(self, incoming_message):
@@ -69,11 +73,15 @@ class MessageHook(Hook):
         :return: True or False
         """
         if not self.case_sensitive:
-            return bool(
-                re.match(self.regex, incoming_message.text, re.IGNORECASE)
-            )
+            for regex in self.regexes:
+                if re.match(regex, incoming_message.text, re.IGNORECASE):
+                    return True
         else:
-            return bool(re.match(self.regex, incoming_message.text))
+            for regex in self.regexes:
+                if re.match(regex, incoming_message.text):
+                    return True
+
+        return False
 
 
 class CommandHook(Hook):
@@ -121,12 +129,12 @@ def find_hooks(plugin_module):
     return hooks
 
 
-def message(regex, case_sensitive=False):
+def message(regexes=[], case_sensitive=False):
     """
     Hook for catching messages, for example:
     "i want cat", "thanks" etc.
 
-    :param regex: string, regular expression for catching messages
+    :param regexes: list[string], regular expressions for catching messages
     :param case_sensitive: bool, is bot catching messages with case sensitive
     :return:
     """
@@ -142,7 +150,7 @@ def message(regex, case_sensitive=False):
             """
             return func(message_object, bot_object)
 
-        wrapped._sheldon_hook = MessageHook(wrapped, regex, case_sensitive)
+        wrapped._sheldon_hook = MessageHook(wrapped, regexes, case_sensitive)
         return wrapped
 
     return hook
