@@ -72,6 +72,11 @@ class Sheldon:
             logger.info_message('Quiting')
             exit()
 
+        # Collect config variables from adapter.
+        for variable in self.adapter.config.variables:
+            if variable not in self.config.variables:
+                self.config.variables[variable] = self.adapter.config.variables[variable]
+
     def _load_plugins(self):
         """
         Load plugins from plugins folder or PyPi using plugins manager.
