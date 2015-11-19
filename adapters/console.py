@@ -3,9 +3,9 @@
 name: console # Name of adapter, lowercase, match with
               # file or package name.
 description: "Example adapter for testing bot."
-config:                           # Config variable that needed to set
-  - SHELDON_CONSOLE_PROMPT: '>>>' # in environment.
-                                  # You can set default values after colon.
+config:                         # Config variable that needed to set
+  SHELDON_CONSOLE_PROMPT: '>>>' # in environment.
+                                # You can set default values after colon.
 """
 from sheldon.adapter import IncomingMessage, Attachment
 from random import randint
