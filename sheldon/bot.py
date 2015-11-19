@@ -83,6 +83,15 @@ class Sheldon:
         # Run function for searching and importing new plugins
         self.plugins_manager.load_plugins()
 
+        # Collect config variables from plugins.
+        for plugin in self.plugins_manager.plugins:
+            # If plugin defined a variable with default value
+            # and user didn't set this variable,
+            # set variable to default value.
+            for variable in plugin.config.variables:
+                if variable not in self.config.variables:
+                    self.config.variables[variable] = plugin.config.variables[variable]
+
     def start(self):
         """
         Start getting, parsing and answering messages

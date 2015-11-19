@@ -69,7 +69,10 @@ class ModuleConfig:
         :param data: dict, result of yaml.load()
         :return:
         """
-        self.data = data
+        self.name = data['name']
+        self.description = data['description']
+        self.variables = data['config']
+        self._data = data
 
 
 def parse_config(module):
