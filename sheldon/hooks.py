@@ -55,7 +55,7 @@ class MessageHook(Hook):
                                      with case sensitive
         """
         self.type = 'message'
-        self.priority = 1
+        self.priority = 2
 
         self.func = user_function
 
@@ -95,7 +95,7 @@ class CommandHook(Hook):
                         For example, 'join'.
         """
         self.type = 'message'
-        self.priority = 2
+        self.priority = 1
 
         self.func = user_function
         self.command = command
