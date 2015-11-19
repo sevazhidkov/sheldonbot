@@ -93,6 +93,24 @@ class Plugin:
         self.config = parse_config(self.module)
         self.hooks = find_hooks(self.module)
 
+    def check_hooks(self, message):
+        """
+        Check incoming message for plugin's hooks
+
+        :param message: IncomingMessage object
+        :return: Hook object or None
+        """
+        found_hooks = []
+        for hook in self.hooks:
+            if hook.check(message):
+                found_hooks.append(hook)
+
+        if found_hooks:
+            found_hooks.sort(key=lambda h: h.priority, reverse=True)
+            return found_hooks[0]
+        else:
+            return None
+
 
 def import_plugin(plugin_name):
     """
