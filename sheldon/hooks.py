@@ -107,7 +107,7 @@ class CommandHook(Hook):
         :param incoming_message: IncomingMessage object
         :return: True or False
         """
-        return incoming_message.lstrip().startswith('!' + self.command)
+        return incoming_message.text.lstrip().startswith('!' + self.command)
 
 
 def find_hooks(plugin_module):
