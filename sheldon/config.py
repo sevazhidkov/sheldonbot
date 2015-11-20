@@ -84,7 +84,7 @@ def parse_config(module):
     """
     if not hasattr(module, '__doc__'):
         logger.error_message('__doc__ config not found in {}'.format(module))
-        return ModuleConfig()
+        return None
 
     config_text = module.__doc__
     try:
