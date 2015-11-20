@@ -7,15 +7,18 @@ config:                         # Config variable that needed to set
   SHELDON_CONSOLE_PROMPT: '>>>' # in environment.
                                 # You can set default values after colon.
 """
-from sheldon.adapter import IncomingMessage, Attachment
-from random import randint
 from os import getlogin
+from time import sleep
+from random import randint
+from sheldon.adapter import IncomingMessage, Attachment
 
 # Code running on adapter loading may be here
 
 
 def get_messages(bot):
     while True:
+        # Let plugin thread end
+        sleep(1)
         text = input('Enter message: ')
 
         attachments = []

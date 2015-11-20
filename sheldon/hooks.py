@@ -10,6 +10,7 @@ Decorators and other functions for hooks.
 Copyright (C) 2015
 """
 
+import _thread
 import re
 
 from sheldon.exceptions import catch_module_errors
@@ -39,7 +40,9 @@ class Hook:
         :param bot: Sheldon object
         :return:
         """
-        self.func.__call__(incoming_message, bot)
+        _thread.start_new_thread(self.func, (
+            incoming_message, bot
+        ))
 
 
 class MessageHook(Hook):
