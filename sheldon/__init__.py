@@ -24,8 +24,8 @@ from sheldon.adapter import *
 # files by url.
 from sheldon.utils import *
 
-__author__ = 'Seva Zhidkov'
-__version__ = '0.0.1#dev'
+__author__ = 'sevazhidkov'
+__version__ = '0.0.1'
 __email__ = 'zhidkovseva@gmail.com'
 
 
