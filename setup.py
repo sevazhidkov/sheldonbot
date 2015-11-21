@@ -9,6 +9,11 @@ setup(
     author='sevazhidkov',
     author_email='zhidkovseva@gmail.com',
     description='Perfect chat bot for your team',
+    install_requires=[
+        'pyyaml',
+        'redis',
+        'requests'
+    ],
     entry_points="""
             [console_scripts]
             sheldon=sheldon_cli:new
