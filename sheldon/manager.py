@@ -54,6 +54,7 @@ class PluginsManager:
         :param plugin_name: name for plugin import
         :return:
         """
+        plugin_name = plugin_name.strip()
         plugin_module = import_plugin(plugin_name)
         if not plugin_module:
             logger.error_message("'{}' plugin didn't load".format(
