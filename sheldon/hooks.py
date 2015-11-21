@@ -58,7 +58,7 @@ class MessageHook(Hook):
                                      with case sensitive
         """
         self.type = 'message'
-        self.priority = 2
+        self.priority = 3
 
         self.func = user_function
 
@@ -97,8 +97,8 @@ class CommandHook(Hook):
         :param command: str, command text without '!'.
                         For example, 'join'.
         """
-        self.type = 'message'
-        self.priority = 1
+        self.type = 'command'
+        self.priority = 2
 
         self.func = user_function
         self.command = command
@@ -111,6 +111,32 @@ class CommandHook(Hook):
         :return: True or False
         """
         return incoming_message.text.lstrip().startswith('!' + self.command)
+
+
+class CallbackHook(Hook):
+    def __init__(self, user_function, callback_func):
+        """
+        Create new function hook.
+
+        :param user_function: decorated user's function, called
+                              when command matching with incoming message
+        :param callback_func: func, that called with incoming_message and
+                              it must return True or False
+        """
+        self.type = 'callback'
+        self.priority = 1
+
+        self.func = user_function
+        self.callback_func = callback_func
+
+    def check(self, incoming_message):
+        """
+        Check, is this message catching for this hook
+
+        :param incoming_message: IncomingMessage object
+        :return: True or False
+        """
+        return self.callback_func.__call__(incoming_message)
 
 
 def find_hooks(plugin_module):
@@ -180,6 +206,33 @@ def command(command_text):
             return func(message_object, bot_object)
 
         wrapped._sheldon_hook = CommandHook(wrapped, command_text)
+        return wrapped
+
+    return hook
+
+
+def callback(callback_func):
+    """
+    Hook for catching anything you want, based on
+    your callback function
+
+    :param callback_func: callback func, takes incoming message
+                          and returns True or False
+    :return:
+    """
+
+    def hook(func):
+        def wrapped(message_object, bot_object):
+            """
+            Wrapper around user's function
+
+            :param message_object: incoming message, Message object
+            :param bot_object: Sheldon object
+            :return:
+            """
+            return func(message_object, bot_object)
+
+        wrapped._sheldon_hook = CallbackHook(wrapped, callback_func)
         return wrapped
 
     return hook
