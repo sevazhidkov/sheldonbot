@@ -25,7 +25,7 @@ from sheldon.adapter import *
 from sheldon.utils import *
 
 __author__ = 'sevazhidkov'
-__version__ = '0.0.1'
+__version__ = '0.0.3'
 __email__ = 'zhidkovseva@gmail.com'
 
 
