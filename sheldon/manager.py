@@ -62,14 +62,15 @@ class PluginsManager:
             ))
             return
         plugin_config = parse_config(plugin_module)
-        hooks = find_hooks(plugin_module)
+        hooks, interval_hooks = find_hooks(plugin_module)
 
-        plugin = Plugin(plugin_name, plugin_module, plugin_config, hooks)
+        plugin = Plugin(plugin_name, plugin_module, plugin_config,
+                        hooks, interval_hooks)
         self.plugins.append(plugin)
 
 
 class Plugin:
-    def __init__(self, name, module, config, hooks):
+    def __init__(self, name, module, config, hooks, interval_hooks):
         """
         Create new plugin
 
@@ -77,12 +78,14 @@ class Plugin:
         :param module: module, imported plugin module
         :param config: ModuleConfig object, parsed plugin config
         :param hooks: list of Hook objects
+        :param interval_hooks: list of IntervalHooks objects
         :return:
         """
         self.name = name
         self.module = module
         self.config = config
         self.hooks = hooks
+        self.interval_hooks = interval_hooks
 
     def reload_plugin(self):
         """

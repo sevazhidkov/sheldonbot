@@ -8,6 +8,10 @@
 Copyright (C) 2015
 """
 
+import time
+import _thread as thread
+import schedule
+
 from sheldon import adapter
 from sheldon import config
 from sheldon import exceptions
@@ -103,6 +107,8 @@ class Sheldon:
 
         :return:
         """
+        thread.start_new_thread(self.start_interval_hooks, ())
+
         for message in self.adapter.module.get_messages(self):
             hook = self.parse_message(message)
             if hook:
@@ -127,6 +133,21 @@ class Sheldon:
         else:
             return None
 
+    def start_interval_hooks(self):
+        """
+        Start all interval hooks in plugins using schedule module
+
+        :return:
+        """
+        for plugin in self.plugins_manager.plugins:
+            for hook in plugin.interval_hooks:
+                # Call hook with bot argument
+                hook.interval.do(lambda: hook.call(self))
+
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+
     @exceptions.catch_module_errors
     def send_message(self, message):
         """
@@ -136,4 +157,3 @@ class Sheldon:
         :return:
         """
         self.adapter.module.send_message(message, self)
-

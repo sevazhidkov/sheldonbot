@@ -9,7 +9,6 @@ Decorators and other functions for hooks.
 
 Copyright (C) 2015
 """
-import sys
 import _thread as thread
 import re
 
@@ -116,10 +115,10 @@ class CommandHook(Hook):
 class CallbackHook(Hook):
     def __init__(self, user_function, callback_func):
         """
-        Create new function hook.
+        Create new callback hook.
 
         :param user_function: decorated user's function, called
-                              when command matching with incoming message
+                              when callback matching with incoming message
         :param callback_func: func, that called with incoming_message and
                               it must return True or False
         """
@@ -139,23 +138,57 @@ class CallbackHook(Hook):
         return self.callback_func.__call__(incoming_message)
 
 
+class IntervalHook(Hook):
+    def __init__(self, user_function, interval):
+        """
+        Create new interval hook.
+
+        :param user_function: decorated user's function, called
+                              when command matching with incoming message
+        :param interval: schedule time from schedule module.
+                         For example, schedule.every().wednesday.at("13:15").
+        """
+        self.type = 'interval'
+        self.priority = 1
+
+        self.func = user_function
+        self.interval = interval
+
+    @catch_module_errors
+    def call(self, bot, incoming_message=None):
+        """
+        Call interval hook
+
+        :param bot: Sheldon object
+        :param incoming_message: not using
+        :return:
+        """
+        self.func.__call__(bot)
+
+
 def find_hooks(plugin_module):
     """
     Find hooks in plugin module
 
     :param plugin_module: module object
-    :return: list of Hook objects
+    :return: list of list of Hook objects and list of IntervalHook objects
     """
     hooks = []
+    interval_hooks = []
     # Iterating throw plugin elements
     for name in plugin_module.__dict__.keys():
         item = plugin_module.__dict__[name]
 
         # Hooks are setting '_sheldon_hook' parameters
         # on functions when they decorated.
-        if hasattr(item, '_sheldon_hook'):
+        if (hasattr(item, '_sheldon_hook') and
+                    item._sheldon_hook.type != 'interval'):
+            # If it not interval hook,
             hooks.append(item._sheldon_hook)
-    return hooks
+        elif (hasattr(item, '_sheldon_hook') and
+                      item._sheldon_hook.type == 'interval'):
+            interval_hooks.append(item._sheldon_hook)
+    return [hooks, interval_hooks]
 
 
 def message(regexes=[], case_sensitive=False):
@@ -233,6 +266,32 @@ def callback(callback_func):
             return func(message_object, bot_object)
 
         wrapped._sheldon_hook = CallbackHook(wrapped, callback_func)
+        return wrapped
+
+    return hook
+
+
+def interval(interval_object):
+    """
+    Hook for running code by intervals.
+    All functionality needs to import from schedule module.
+
+    :param interval_object: interval object from schedule module.
+                            For example, schedule.every().wednesday.at("13:15")
+    :return:
+    """
+
+    def hook(func):
+        def wrapped(bot_object):
+            """
+            Wrapper around user's function
+
+            :param bot_object: Sheldon object
+            :return:
+            """
+            return func(bot_object)
+
+        wrapped._sheldon_hook = IntervalHook(wrapped, interval_object)
         return wrapped
 
     return hook
