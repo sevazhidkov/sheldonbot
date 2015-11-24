@@ -36,13 +36,15 @@ class Sheldon:
 
         self._load_config(command_line_arguments)
 
+        self._load_storage()
+
         self._load_adapter(command_line_arguments)
 
         self._load_plugins()
 
     def _load_config(self, command_line_arguments):
         """
-        Create  and load bot config.
+        Create and load bot config.
 
         :param command_line_arguments: dict, arguments for creating config:
                                        config-prefix - prefix of environment
@@ -56,6 +58,14 @@ class Sheldon:
         if not self.config:
             logger.info_message('Quiting')
             exit()
+
+    def _load_storage(self):
+        """
+        Connect to bot storage in Redis
+
+        :return:
+        """
+        self.storage = storage.Storage(self)
 
     def _load_adapter(self, command_line_arguments):
         """
