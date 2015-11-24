@@ -6,7 +6,6 @@ def new():
     while not project_name:
         project_name = input('Enter name for project: ')
     os.makedirs(project_name + '/adapters')
-    os.makedirs(project_name + '/data/log')
     os.mkdir(project_name + '/plugins')
     print('Created directories')
 
