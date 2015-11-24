@@ -163,7 +163,7 @@ class IntervalHook(Hook):
         :param incoming_message: not using
         :return:
         """
-        self.func.__call__(bot)
+        thread.start_new_thread(self.func.__call__, (bot, ))
 
 
 def find_hooks(plugin_module):
