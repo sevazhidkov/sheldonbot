@@ -28,16 +28,19 @@ class Storage:
         # Connect to Redis.
         # If we had problems with Redis - just set self.redis to None.
         # Not redis-required modules must work without Redis.
+
+        # We get parameters for redis connection from bot's config.
+        self.redis = StrictRedis(
+            host=bot.config.get('SHELDON_REDIS_HOST', 'localhost'),
+            port=bot.config.get('SHELDON_REDIS_PORT', '6379'),
+            db=bot.config.get('SHELDON_REDIS_DB', '0')
+        )
         try:
-            # We get parameters for redis connection from bot's config.
-            self.redis = StrictRedis(
-                host=bot.config.get('SHELDON_REDIS_HOST', 'localhost'),
-                port=bot.config.get('SHELDON_REDIS_PORT', '6379'),
-                db=bot.config.get('SHELDON_REDIS_DB', '0')
-            )
+            # Check Redis connection
+            self.redis.client_list()
         except Exception as error:
             logger.error_message('Error while connecting Redis:')
-            logger.error_message(str(error.__traceback__))
+            logger.error_message(str(error))
             self.redis = None
 
     def get(self, key, default_value=None):
@@ -53,6 +56,9 @@ class Storage:
         # If we had problems with redis connection,
         # return None or other default value
         if not self.redis:
+            logger.warning_message("Redis not available for {} key".format(
+                key
+            ))
             return default_value
 
         value = self.redis.get(key)
@@ -70,6 +76,9 @@ class Storage:
         :return:
         """
         if not self.redis:
+            logger.warning_message("{} key didn't save in storage".format(
+                key
+            ))
             return None
 
         return self.redis.set(key, value)
