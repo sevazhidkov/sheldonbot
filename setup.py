@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='sheldon',
-    version='0.0.3',
+    version='0.0.4',
     packages=['sheldon', 'sheldon.utils', 'sheldon_cli'],
     url='https://github.com/sevazhidkov/sheldon',
     license=' The MIT License (MIT)',
